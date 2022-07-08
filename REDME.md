@@ -11,3 +11,6 @@
 
 Los archivos se encuentran en la carpeta "Swagger+Postman"
 
+### Nota:
+- se uso la libreria [webdrivermanager](https://github.com/bonigarcia/webdrivermanager) para 
+ facilitar la conexion de driver de navegador.  
