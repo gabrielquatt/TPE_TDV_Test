@@ -1,0 +1,187 @@
+openapi: 3.0.1
+info:
+  title: Facke story API.
+  description: Fake store rest API for your e-commerce or shopping website prototype.
+  version: 1.0.0
+servers:
+- url: https://fakestoreapi.com/
+tags:
+- name: productos
+  description: Maneja la información de los productos
+  
+  
+paths:
+  /products:
+    get:
+      tags:
+        - productos
+      summary: Obtiene lista de todos los productos
+      responses: 
+        200:
+          description: (OK) La informacion se obtuvo correctamente
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: '#/components/schemas/ProductoLista'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+  
+    post:
+      tags:
+        - productos
+      summary: Añadir un nuevo producto
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductoPost'
+        required: true
+      responses: 
+        200:
+          description: (OK) La informacion se obtuvo correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Producto'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+    
+  /products/{idProducto}:       
+    get:
+      tags:
+        - productos
+      summary: Obtiene un producto dado un id
+      parameters:
+      - name: idProducto
+        in: path
+        description: Identificador del producto a obtener
+        required: true
+        schema:
+          type: string
+      responses: 
+        200:
+          description: (OK) La informacion se obtuvo correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Producto'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+          
+  /products/categories: 
+    get:
+      tags:
+        - productos
+      summary: Obtiene lista de categorias
+      responses: 
+        200:
+          description: (OK) La informacion se obtuvo correctamente
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: '#/components/schemas/Categoria'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+      
+          
+components:
+  responses:
+      NotFound:
+        description: (NotFound) No se encontró información 
+      BadRequest:
+        description: (Bad Request) Los datos enviados son incorrectos o hay datos obligatorios no enviados
+      ServerError:
+        description: Error en servidor
+        
+        
+  schemas:
+    Producto:
+      type: object
+      properties:
+        id: 
+          type: integer
+          description: Identificador del producto
+        title:
+          type: string
+          description: Nombre del producto
+        price:
+          type: number
+          description: Precio del producto
+        description:
+          type: string
+          description: Descripcion del producto
+        image:
+          type: string
+          description: Imagen del producto
+        category:
+          type: string
+          description: Categoria del producto
+  
+    ProductoPost:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Nombre del producto
+        price:
+          type: number
+          description: Precio del producto
+        description:
+          type: string
+          description: Descripcion del producto
+        image:
+          type: string
+          description: Imagen del producto
+        category:
+          type: string
+          description: Categoria del producto
+  
+    ProductoLista:
+      type: object
+      properties:
+        id: 
+          type: integer
+          description: Identificador del producto
+        title:
+          type: string
+          description: Nombre del producto
+        price:
+          type: number
+          description: Precio del producto
+        category:
+          type: string
+          description: Categoria del producto
+        description:
+          type: string
+          description: Descripcion del producto
+        image:
+          type: string
+          description: Imagen del producto
+        rating:
+          type: object
+          properties:
+            rate:
+              type: number
+              description: Valoracion del producto
+            count:
+             type: integer
+             description: Cantidad de valoraciones del producto
+             
+    Categoria:
+      type: string
+      description: Nombre de la categoria
+        

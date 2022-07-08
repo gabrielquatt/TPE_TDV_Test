@@ -1,0 +1,106 @@
+{
+	"info": {
+		"_postman_id": "ed316460-3b57-4101-bb57-74a637496f6a",
+		"name": "TP-TVD",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11654901"
+	},
+	"item": [
+		{
+			"name": "TestProducto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"if(responseCode.code === 200) {",
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"tests[\"Producto recomendado\"] = jsonData.rating.rate > 4;",
+							"",
+							"tests[\"Producto no recomendado\"] = jsonData.rating.rate < 2;",
+							"",
+							"tests[\"Producto costoso\"] = jsonData.price > 500;",
+							"",
+							"tests[\"Producto barato\"] = jsonData.price < 15;",
+							"",
+							"pm.test(\"Tipo de datos esperados\", function () {",
+							"  pm.expect(jsonData).to.be.an(\"object\");",
+							"  pm.expect(jsonData.id).to.be.a(\"number\");",
+							"  pm.expect(jsonData.title).to.be.a(\"string\");",
+							"  pm.expect(jsonData.price).to.be.an(\"number\");",
+							"  pm.expect(jsonData.description).to.be.an(\"string\");",
+							"  pm.expect(jsonData.category).to.be.an(\"string\");",
+							"  pm.expect(jsonData.image).to.be.an(\"string\");",
+							"  pm.expect(jsonData.price).to.be.an(\"number\");",
+							"  pm.expect(jsonData.rating).to.be.an(\"object\");",
+							"});",
+							"} "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://fakestoreapi.com/products/8",
+					"protocol": "https",
+					"host": [
+						"fakestoreapi",
+						"com"
+					],
+					"path": [
+						"products",
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TestFiltroCategoria",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"if(responseCode.code === 200) {",
+							" var jsonData = JSON.parse(responseBody);",
+							" pm.test(\"Filtro categoria\", function () {",
+							" jsonData.forEach(e => {",
+							"     pm.expect(e.category).to.eql(\"jewelery\");",
+							" });",
+							"});",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://fakestoreapi.com/products/category/jewelery",
+					"protocol": "https",
+					"host": [
+						"fakestoreapi",
+						"com"
+					],
+					"path": [
+						"products",
+						"category",
+						"jewelery"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
