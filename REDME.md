@@ -1,4 +1,4 @@
-# Tecnicas de Validadcion y Documentacion 
+# Tecnicas de Validacion y Documentacion 
 
 ----------------------------------------------------------------------
 ## Participantes:
